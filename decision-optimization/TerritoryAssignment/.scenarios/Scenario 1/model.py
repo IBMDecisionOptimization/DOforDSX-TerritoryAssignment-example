@@ -8,6 +8,10 @@ import pandas as pd
 import numpy as np
 
 
+# Return index values of a multi-index from index name
+def helper_get_level_values(df, column_name):
+    return df.index.get_level_values(df.index.names.index(column_name))
+
 # Label constraint
 def helper_add_labeled_cplex_constraint(mdl, expr, label, context=None, columns=None):
     global expr_counter
@@ -28,10 +32,14 @@ def helper_add_labeled_cplex_constraint(mdl, expr, label, context=None, columns=
 
 
 # Data model definition for each table
+# Data collection: list_of_Homedistance ['salesrep', 'state', 'value', 'line']
 # Data collection: list_of_Salesrep ['capacity', 'salesrep']
 # Data collection: list_of_State ['customers', 'state']
 
 # Create a pandas Dataframe for each data table
+list_of_Homedistance = inputs['homedistance']
+list_of_Homedistance = list_of_Homedistance[['salesrep', 'state', 'value']].copy()
+list_of_Homedistance.rename(columns={'salesrep': 'salesrep', 'state': 'state', 'value': 'value'}, inplace=True)
 list_of_Salesrep = inputs['salesrep']
 list_of_Salesrep = list_of_Salesrep[['capacity', 'salesrep']].copy()
 list_of_Salesrep.rename(columns={'capacity': 'capacity', 'salesrep': 'salesrep'}, inplace=True)
@@ -40,6 +48,7 @@ list_of_State = list_of_State[['customers', 'state']].copy()
 list_of_State.rename(columns={'customers': 'customers', 'state': 'state'}, inplace=True)
 
 # Set index when a primary key is defined
+list_of_Homedistance.index.name = 'id_of_Homedistance'
 list_of_Salesrep.set_index('salesrep', inplace=True)
 list_of_Salesrep.sort_index(inplace=True)
 list_of_Salesrep.index.name = 'id_of_Salesrep'
@@ -73,27 +82,36 @@ def build_model():
     # 	cMinimizeAssignmentValue cMinimizeAssignmentValue{
     # 	cScaledGoal.scaleFactorExpr = 1,
     # 	cSingleCriterionGoal.goalFilter = null,
-    # 	cSingleCriterionGoal.numericExpr = total cResourceAssignment[salesrep, state] / salesrep / valueOfInverse(distance, distance.cAssignmentValueConcept.resource) [distance / activity is cResourceAssignment[salesrep, state] / state] / value,
+    # 	cSingleCriterionGoal.numericExpr = total cResourceAssignment[salesrep, state] / salesrep / valueOfInverse(alldistance, alldistance.cAssignmentValueConcept.resource) [alldistance / activity is cResourceAssignment[salesrep, state] / state] / value,
     # 	cMinimizeAssignmentValue.assignment = cResourceAssignment[salesrep, state],
-    # 	cMinimizeAssignmentValue.assignmentValue = distance} with weight 5.0
-    agg_ResourceAssignment_resourceAssignmentVar_SG1 = mdl.sum(list_of_ResourceAssignment.resourceAssignmentVar)
+    # 	cMinimizeAssignmentValue.assignmentValue = alldistance} with weight 5.0
+    # 	cMaximizeAssignmentValue cMaximizeAssignmentValue{
+    # 	cScaledGoal.scaleFactorExpr = 1,
+    # 	cSingleCriterionGoal.goalFilter = null,
+    # 	cSingleCriterionGoal.numericExpr = total cResourceAssignment[salesrep, state] / salesrep / inverse(homedistance.salesrep) [homedistance / state is cResourceAssignment[salesrep, state] / state] / value,
+    # 	cMaximizeAssignmentValue.assignment = cResourceAssignment[salesrep, state],
+    # 	cMaximizeAssignmentValue.assignmentValue = homedistance} with weight 5.0
+    join_ResourceAssignment_Homedistance_SG1 = list_of_ResourceAssignment.reset_index().merge(list_of_Homedistance.reset_index(), left_on=['id_of_Salesrep'], right_on=['salesrep']).set_index(list_of_ResourceAssignment.index.names + list(set(list_of_Homedistance.index.names) - set(list_of_ResourceAssignment.index.names)))
+    filtered_ResourceAssignment_Homedistance_SG1 = join_ResourceAssignment_Homedistance_SG1.loc[join_ResourceAssignment_Homedistance_SG1.state == helper_get_level_values(join_ResourceAssignment_Homedistance_SG1, 'id_of_State')].copy()
+    filtered_ResourceAssignment_Homedistance_SG1['conditioned_value'] = filtered_ResourceAssignment_Homedistance_SG1.resourceAssignmentVar * filtered_ResourceAssignment_Homedistance_SG1.value
+    agg_ResourceAssignment_Homedistance_conditioned_value_SG1 = mdl.sum(filtered_ResourceAssignment_Homedistance_SG1.conditioned_value)
     
-    mdl.add_kpi(1.0 * (agg_ResourceAssignment_resourceAssignmentVar_SG1) / 1, publish_name='the number of salesrep to state assignments')
+    mdl.add_kpi(1.0 * (agg_ResourceAssignment_Homedistance_conditioned_value_SG1) / 1, publish_name='overall quality of salesrep to state assignments according to homedistances')
     
     mdl.maximize( 0
-        # Sub Goal cMaximizeAssignmentsAutoSelected_cMaximizeGoal
-        # Maximize the number of salesrep to state assignments
-        + 1.0 * (agg_ResourceAssignment_resourceAssignmentVar_SG1) / 1
+        # Sub Goal cMaximizeAssignmentValue_cMaximizeGoal
+        # Maximize overall quality of salesrep to state assignments according to homedistances
+        + 1.0 * (agg_ResourceAssignment_Homedistance_conditioned_value_SG1) / 1
     )
     
     # [ST_1] Constraint : cLimitNumberOfResourcesAssignedToEachActivity_cIterativeRelationalConstraint
-    # The number of salesrep assignments for each state is less than or equal to 1
-    # Label: CT_1_The_number_of_salesrep_assignments_for_each_state_is_less_than_or_equal_to_1
+    # The number of salesrep assignments for each state is equal to 1
+    # Label: CT_1_The_number_of_salesrep_assignments_for_each_state_is_equal_to_1
     join_State_ResourceAssignment = list_of_State.join(list_of_ResourceAssignment, how='inner')
     groupbyLevels = [join_State_ResourceAssignment.index.names.index(name) for name in list_of_State.index.names]
     groupby_State_ResourceAssignment = join_State_ResourceAssignment.resourceAssignmentVar.groupby(level=groupbyLevels).sum().to_frame()
     for row in groupby_State_ResourceAssignment.itertuples(index=True):
-        helper_add_labeled_cplex_constraint(mdl, row.resourceAssignmentVar <= 1, 'The number of salesrep assignments for each state is less than or equal to 1', row)
+        helper_add_labeled_cplex_constraint(mdl, row.resourceAssignmentVar == 1, 'The number of salesrep assignments for each state is equal to 1', row)
     
     # [ST_2] Constraint : cResourceRelationalConstraint_cIterativeRelationalConstraint
     # For each salesrep, total customers of assigned states is less than capacity
