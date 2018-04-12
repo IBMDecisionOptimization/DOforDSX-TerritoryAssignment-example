@@ -1,0 +1,9 @@
+{
+	"provider": ["IBM"], 
+	"name":  "DO for DSX Territory Assignment example" ,
+	"model": [ "CPLEX" ],
+	"development": [ "Modeling Assistant" ],
+	"category": [ {"DOforDSX":["DO for DSX"]} ],
+	"industry": [ "Sales" ],
+	"abstract": "Assign territories to SalesReps."
+}
