@@ -1,51 +1,51 @@
 state,expected revenue,customers,initial_salesrep
-AK,200000,10,Eric
-AL,100000,12,Mark
-AR,150000,15,Paul
-AZ,150000,8,John
-CA,250000,6,John
-CO,80000,2,Joe
-CT,50000,9,Jack
-DE,100000,4,Jack
-FL,250000,5,Mark
-GA,150000,10,Mark
-HI,100000,8,John
-IA,250000,12,Joe
-ID,200000,7,Eric
-IL,150000,13,Joe
-IN,150000,16,Paul
-KS,80000,10,Paul
-KY,50000,8,Bill
-LA,100000,15,Steve
-MA,100000,9,Jack
-MD,150000,2,Jack
-ME,250000,6,Jack
-MI,200000,4,Bill
-MN,150000,5,Joe
-MO,250000,8,Paul
-MS,150000,10,Steve
-MT,80000,7,Eric
-NC,150000,6,Mark
-ND,150000,2,Joe
-NE,50000,13,Joe
-NH,250000,12,Jack
-NJ,150000,10,Jack
-NM,100000,8,Joe
-NV,100000,16,John
-NY,200000,15,Bill
-OH,250000,9,Bill
-OK,80000,4,Paul
-OR,50000,5,Eric
-PA,100000,10,Mark
-RI,250000,8,Jack
-SC,150000,7,Mark
-SD,100000,13,Joe
-TN,200000,16,Paul
-TX,150000,12,Joe
-UT,150000,10,Eric
-VA,80000,15,Bill
-VT,250000,8,Jack
-WA,50000,6,Eric
-WI,250000,9,Bill
-WV,100000,2,Jack
-WY,150000,4,Eric
+Alabama,200000,10,Eric
+Alaska,100000,12,Mark
+Arizona,150000,15,Paul
+Arkansas,150000,8,John
+California,250000,6,John
+Colorado,80000,2,Joe
+Connecticut,50000,9,Jack
+Delaware,100000,4,Jack
+Florida,250000,5,Mark
+Georgia,150000,10,Mark
+Hawaii,100000,8,John
+Idaho,250000,12,Joe
+Illinois,200000,7,Eric
+Indiana,150000,13,Joe
+Iowa,150000,16,Paul
+Kansas,80000,10,Paul
+Kentucky,50000,8,Bill
+Louisiana,100000,15,Steve
+Maine,100000,9,Jack
+Maryland,150000,2,Jack
+Massachusetts,250000,6,Jack
+Michigan,200000,4,Bill
+Minnesota,150000,5,Joe
+Mississippi,250000,8,Paul
+Missouri,150000,10,Steve
+Montana,80000,7,Eric
+Nebraska,150000,6,Mark
+Nevada,150000,2,Joe
+New Hampshire,50000,13,Joe
+New Jersey,250000,12,Jack
+New Mexico,150000,10,Jack
+New York,100000,8,Joe
+North Carolina,100000,16,John
+North Dakota,200000,15,Bill
+Ohio,250000,9,Bill
+Oklahoma,80000,4,Paul
+Oregon,50000,5,Eric
+Pennsylvania,100000,10,Mark
+Rhode Island,250000,8,Jack
+South Carolina,150000,7,Mark
+South Dakota,100000,13,Joe
+Tennessee,200000,16,Paul
+Texas,150000,12,Joe
+Utah,150000,10,Eric
+Vermont,80000,15,Bill
+Virginia,250000,8,Jack
+Washington,50000,6,Eric
+West Virginia,250000,9,Bill
+Wisconsin,100000,2,Jack
+Wyoming,150000,4,Eric

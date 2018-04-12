@@ -66,6 +66,16 @@ def build_model():
     # 	cSingleCriterionGoal.goalFilter = null,
     # 	cSingleCriterionGoal.numericExpr = count( cResourceAssignment[salesrep, state]),
     # 	cMaximizeAssignments.assignment = cResourceAssignment[salesrep, state]} with weight 5.0
+    # 	cMinimizeGoalAssign cMinimizeGoalAssign{
+    # 	cScaledGoal.scaleFactorExpr = 1,
+    # 	cSingleCriterionGoal.goalFilter = null,
+    # 	cSingleCriterionGoal.numericExpr = distance from cResourceAssignment[salesrep, state] / state / state to cResourceAssignment[salesrep, state] / salesrep / home / state} with weight 5.0
+    # 	cMinimizeAssignmentValue cMinimizeAssignmentValue{
+    # 	cScaledGoal.scaleFactorExpr = 1,
+    # 	cSingleCriterionGoal.goalFilter = null,
+    # 	cSingleCriterionGoal.numericExpr = total cResourceAssignment[salesrep, state] / salesrep / valueOfInverse(distance, distance.cAssignmentValueConcept.resource) [distance / activity is cResourceAssignment[salesrep, state] / state] / value,
+    # 	cMinimizeAssignmentValue.assignment = cResourceAssignment[salesrep, state],
+    # 	cMinimizeAssignmentValue.assignmentValue = distance} with weight 5.0
     agg_ResourceAssignment_resourceAssignmentVar_SG1 = mdl.sum(list_of_ResourceAssignment.resourceAssignmentVar)
     
     mdl.add_kpi(1.0 * (agg_ResourceAssignment_resourceAssignmentVar_SG1) / 1, publish_name='the number of salesrep to state assignments')
@@ -98,13 +108,13 @@ def build_model():
         helper_add_labeled_cplex_constraint(mdl, row.conditioned_customers <= -0.001 + row.capacity, 'For each salesrep, total customers of assigned states is less than capacity', row)
     
     # [ST_3] Constraint : cManualAssignment_cCategoryCompatibilityConstraintOnPair
-    # CA is assigned to John
-    # Label: CT_3_CA_is_assigned_to_John
+    # California is assigned to John
+    # Label: CT_3_California_is_assigned_to_John
     filtered_Salesrep = list_of_Salesrep.loc[['John']]
     join_Salesrep_ResourceAssignment = filtered_Salesrep.join(list_of_ResourceAssignment, how='inner')
-    filtered_State = list_of_State.loc[['CA']]
+    filtered_State = list_of_State.loc[['California']]
     join_Salesrep_ResourceAssignment_State = join_Salesrep_ResourceAssignment.reset_index().join(filtered_State, on=['id_of_State'], how='inner').set_index(join_Salesrep_ResourceAssignment.index.names)
-    helper_add_labeled_cplex_constraint(mdl, mdl.sum(join_Salesrep_ResourceAssignment_State.resourceAssignmentVar) >= 1, 'CA is assigned to John')
+    helper_add_labeled_cplex_constraint(mdl, mdl.sum(join_Salesrep_ResourceAssignment_State.resourceAssignmentVar) >= 1, 'California is assigned to John')
 
 
     return mdl
