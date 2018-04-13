@@ -5,5 +5,5 @@
 	"development": [ "Modeling Assistant" ],
 	"category": [ {"DOforDSX":["DO for DSX"]} ],
 	"industry": [ "Sales" ],
-	"abstract": "Assign territories to SalesReps."
+	"abstract": "Assign territories to SalesReps taking into account customer expected revenue, salesrep capacity and minimizing travelling distance or disruption."
 }
