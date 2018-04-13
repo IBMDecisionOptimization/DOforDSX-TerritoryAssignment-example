@@ -1,0 +1,50 @@
+Mark,Florida,50,4,800000,5,250000,Florida,Mark,0,0,0,0
+Joe,Wyoming,80,8,1300000,4,150000,Colorado,Eric,0,1,0,444
+Mark,Alabama,50,4,800000,10,200000,Florida,Eric,0,1,0,745
+Eric,Maryland,80,5,1400000,2,150000,Pennsylvania,Jack,0,1,0,173
+Paul,Louisiana,70,3,600000,15,100000,Oklahoma,Steve,0,1,0,678
+Bill,Illinois,60,7,1200000,7,200000,Illinois,Eric,0,1,0,0
+John,Washington,70,1,1000000,6,50000,California,Eric,0,1,0,1264
+Eric,Ohio,80,5,1400000,9,250000,Pennsylvania,Bill,0,1,0,470
+Bill,Minnesota,60,7,1200000,5,150000,Illinois,Joe,0,1,0,716
+Paul,Arkansas,70,3,600000,8,150000,Oklahoma,John,0,1,0,419
+Mark,South Carolina,50,4,800000,7,150000,Florida,Mark,0,0,0,681
+Joe,Colorado,80,8,1300000,2,80000,Colorado,Joe,0,0,0,0
+John,Alaska,70,1,1000000,12,100000,California,Mark,0,1,0,3620
+Joe,Idaho,80,8,1300000,12,250000,Colorado,Joe,0,0,0,954
+Jack,Rhode Island,70,2,1200000,8,250000,New York,Jack,0,0,0,289
+John,Hawaii,70,1,1000000,8,100000,California,John,0,0,0,4020
+Jack,New Hampshire,70,2,1200000,13,50000,New York,Joe,0,1,0,311
+Jack,Connecticut,70,2,1200000,9,50000,New York,Jack,0,0,0,192
+Paul,Missouri,70,3,600000,10,150000,Oklahoma,Steve,0,1,0,523
+Jack,Massachusetts,70,2,1200000,6,250000,New York,Jack,0,0,0,282
+John,California,70,1,1000000,6,250000,California,John,0,0,0,0
+Eric,Pennsylvania,80,5,1400000,10,100000,Pennsylvania,Mark,0,1,0,0
+Eric,Virginia,80,5,1400000,8,250000,Pennsylvania,Jack,0,1,0,325
+Eric,Delaware,80,5,1400000,4,100000,Pennsylvania,Jack,0,1,0,203
+Paul,Oklahoma,70,3,600000,4,80000,Oklahoma,Paul,0,0,0,0
+Jack,New York,70,2,1200000,8,100000,New York,Joe,0,1,0,0
+Bill,Kentucky,60,7,1200000,8,50000,Illinois,Bill,0,0,0,478
+Joe,North Dakota,80,8,1300000,15,200000,Colorado,Bill,0,1,0,1042
+Eric,New Jersey,80,5,1400000,12,250000,Pennsylvania,Jack,0,1,0,230
+Steve,Mississippi,25,6,100000,8,250000,Texas,Paul,0,1,0,768
+Eric,West Virginia,80,5,1400000,9,250000,Pennsylvania,Bill,0,1,0,397
+Paul,Nebraska,70,3,600000,6,150000,Oklahoma,Mark,0,1,0,629
+Paul,Kansas,70,3,600000,10,80000,Oklahoma,Paul,0,0,0,330
+Steve,Texas,25,6,100000,12,150000,Texas,Joe,0,1,0,0
+Joe,South Dakota,80,8,1300000,13,100000,Colorado,Joe,0,0,0,760
+John,Arizona,70,1,1000000,15,150000,California,Paul,0,1,0,798
+Eric,North Carolina,80,5,1400000,16,100000,Pennsylvania,John,0,1,0,597
+Mark,Georgia,50,4,800000,10,150000,Florida,Mark,0,0,0,616
+Bill,Indiana,60,7,1200000,13,150000,Illinois,Joe,0,1,0,239
+Bill,Michigan,60,7,1200000,4,200000,Illinois,Bill,0,0,0,495
+Jack,Maine,70,2,1200000,9,100000,New York,Jack,0,0,0,530
+Jack,Vermont,70,2,1200000,15,80000,New York,Bill,0,1,0,277
+Joe,New Mexico,80,8,1300000,10,150000,Colorado,Jack,0,1,0,477
+Joe,Utah,80,8,1300000,10,150000,Colorado,Eric,0,1,0,574
+John,Oregon,70,1,1000000,5,50000,California,Eric,0,1,0,962
+Paul,Tennessee,70,3,600000,16,200000,Oklahoma,Paul,0,0,0,925
+Bill,Wisconsin,60,7,1200000,2,100000,Illinois,Jack,0,1,0,439
+Joe,Montana,80,8,1300000,7,80000,Colorado,Eric,0,1,0,969
+John,Nevada,70,1,1000000,2,150000,California,Joe,0,1,0,337
+Bill,Iowa,60,7,1200000,16,150000,Illinois,Paul,0,1,0,399

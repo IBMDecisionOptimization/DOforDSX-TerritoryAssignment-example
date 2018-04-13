@@ -1,0 +1,51 @@
+[2018-04-13T06:42:35Z, INFO] * building wado model
+[2018-04-13T06:42:35Z, INFO] model building done in 0.14791893959 secs
+[2018-04-13T06:42:35Z, INFO] * running wado model
+[2018-04-13T06:42:36Z, INFO] WARNING: Number of workers has been reduced to 1 to comply with platform limitations.
+[2018-04-13T06:42:36Z, INFO] CPXPARAM_TimeLimit                               120
+[2018-04-13T06:42:36Z, INFO] CPXPARAM_Read_DataCheck                          1
+[2018-04-13T06:42:36Z, INFO] CPXPARAM_Threads                                 1
+[2018-04-13T06:42:36Z, INFO] Tried aggregator 1 time.
+[2018-04-13T06:42:36Z, INFO] MIP Presolve modified 8 coefficients.
+[2018-04-13T06:42:36Z, INFO] Reduced MIP has 58 rows, 400 columns, and 800 nonzeros.
+[2018-04-13T06:42:36Z, INFO] Reduced MIP has 400 binaries, 0 generals, 0 SOSs, and 0 indicators.
+[2018-04-13T06:42:36Z, INFO] Presolve time = 0.00 sec. (0.77 ticks)
+[2018-04-13T06:42:36Z, INFO] Found incumbent of value 106255.000000 after 0.01 sec. (1.69 ticks)
+[2018-04-13T06:42:36Z, INFO] Probing time = 0.00 sec. (0.30 ticks)
+[2018-04-13T06:42:36Z, INFO] Tried aggregator 1 time.
+[2018-04-13T06:42:36Z, INFO] Reduced MIP has 58 rows, 400 columns, and 800 nonzeros.
+[2018-04-13T06:42:36Z, INFO] Reduced MIP has 400 binaries, 0 generals, 0 SOSs, and 0 indicators.
+[2018-04-13T06:42:36Z, INFO] Presolve time = 0.00 sec. (0.62 ticks)
+[2018-04-13T06:42:36Z, INFO] Probing time = 0.00 sec. (0.30 ticks)
+[2018-04-13T06:42:36Z, INFO] Clique table members: 65.
+[2018-04-13T06:42:36Z, INFO] MIP emphasis: balance optimality and feasibility.
+[2018-04-13T06:42:36Z, INFO] MIP search method: dynamic search.
+[2018-04-13T06:42:36Z, INFO] Parallel mode: none, using 1 thread.
+[2018-04-13T06:42:36Z, INFO] Root relaxation solution time = 0.00 sec. (0.22 ticks)
+[2018-04-13T06:42:36Z, INFO] 
+[2018-04-13T06:42:36Z, INFO]         Nodes                                         Cuts/
+[2018-04-13T06:42:36Z, INFO]    Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap
+[2018-04-13T06:42:36Z, INFO] *     0+    0                       106255.0000        0.0000           100.00%
+[2018-04-13T06:42:36Z, INFO]       0     0    29341.8667     6   106255.0000    29341.8667        9   72.39%
+[2018-04-13T06:42:36Z, INFO] *     0+    0                        29619.0000    29341.8667             0.94%
+[2018-04-13T06:42:36Z, INFO] *     0+    0                        29577.0000    29341.8667             0.79%
+[2018-04-13T06:42:36Z, INFO]       0     0    29549.3333     4    29577.0000       Cuts: 6       13    0.09%
+[2018-04-13T06:42:36Z, INFO]       0     0        cutoff          29577.0000                     14    0.00%
+[2018-04-13T06:42:36Z, INFO] Elapsed time = 0.04 sec. (4.90 ticks, tree = 0.01 MB
+[2018-04-13T06:42:36Z, INFO] , solutions = 3
+[2018-04-13T06:42:36Z, INFO] )
+[2018-04-13T06:42:36Z, INFO] Cover cuts applied:  2
+[2018-04-13T06:42:36Z, INFO] Zero-half cuts applied:  2
+[2018-04-13T06:42:36Z, INFO] 
+[2018-04-13T06:42:36Z, INFO] Root node processing (before b&c):
+[2018-04-13T06:42:36Z, INFO]   Real time             =    0.04 sec. (4.92 ticks)
+[2018-04-13T06:42:36Z, INFO] Sequential b&c:
+[2018-04-13T06:42:36Z, INFO]   Real time             =    0.00 sec. (0.00 ticks)
+[2018-04-13T06:42:36Z, INFO]                           ------------
+[2018-04-13T06:42:36Z, INFO] Total (root+branch&cut) =    0.04 sec. (4.92 ticks)
+[2018-04-13T06:42:36Z, INFO] Solve status:
+[2018-04-13T06:42:36Z, INFO] JobSolveStatus.OPTIMAL_SOLUTION
+[2018-04-13T06:42:36Z, INFO] * model docplex_model1 solved with objective = 29577.000
+[2018-04-13T06:42:36Z, INFO] *  KPI: overall cost of salesrep to state assignments according to homedistances = 29577.000
+[2018-04-13T06:42:36Z, INFO] model solve done in 0.118895053864 secs
+[2018-04-13T06:42:36Z, INFO] solution export done in 0.00633978843689 secs

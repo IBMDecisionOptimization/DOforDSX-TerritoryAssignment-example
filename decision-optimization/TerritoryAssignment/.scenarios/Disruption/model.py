@@ -32,14 +32,14 @@ def helper_add_labeled_cplex_constraint(mdl, expr, label, context=None, columns=
 
 
 # Data model definition for each table
-# Data collection: list_of_Homedistance ['salesrep', 'state', 'value', 'line']
+# Data collection: list_of_Disruption ['salesrep', 'state', 'value', 'line']
 # Data collection: list_of_Salesrep ['capacity', 'salesrep']
 # Data collection: list_of_State ['customers', 'state']
 
 # Create a pandas Dataframe for each data table
-list_of_Homedistance = inputs['homedistance']
-list_of_Homedistance = list_of_Homedistance[['salesrep', 'state', 'value']].copy()
-list_of_Homedistance.rename(columns={'salesrep': 'salesrep', 'state': 'state', 'value': 'value'}, inplace=True)
+list_of_Disruption = inputs['disruption']
+list_of_Disruption = list_of_Disruption[['salesrep', 'state', 'value']].copy()
+list_of_Disruption.rename(columns={'salesrep': 'salesrep', 'state': 'state', 'value': 'value'}, inplace=True)
 list_of_Salesrep = inputs['salesrep']
 list_of_Salesrep = list_of_Salesrep[['capacity', 'salesrep']].copy()
 list_of_Salesrep.rename(columns={'capacity': 'capacity', 'salesrep': 'salesrep'}, inplace=True)
@@ -48,7 +48,7 @@ list_of_State = list_of_State[['customers', 'state']].copy()
 list_of_State.rename(columns={'customers': 'customers', 'state': 'state'}, inplace=True)
 
 # Set index when a primary key is defined
-list_of_Homedistance.index.name = 'id_of_Homedistance'
+list_of_Disruption.index.name = 'id_of_Disruption'
 list_of_Salesrep.set_index('salesrep', inplace=True)
 list_of_Salesrep.sort_index(inplace=True)
 list_of_Salesrep.index.name = 'id_of_Salesrep'
@@ -68,40 +68,25 @@ def build_model():
 
 
     # Definition of model
-    # Objective cMaximizeAssignmentsAutoSelected-
+    # Objective cMinimizeAssignmentValue-
     # Combine weighted criteria: 
-    # 	cMaximizeAssignmentsAutoSelected cMaximizeAssignmentsAutoSelected{
-    # 	cScaledGoal.scaleFactorExpr = 1,
-    # 	cSingleCriterionGoal.goalFilter = null,
-    # 	cSingleCriterionGoal.numericExpr = count( cResourceAssignment[salesrep, state]),
-    # 	cMaximizeAssignments.assignment = cResourceAssignment[salesrep, state]} with weight 5.0
-    # 	cMinimizeGoalAssign cMinimizeGoalAssign{
-    # 	cScaledGoal.scaleFactorExpr = 1,
-    # 	cSingleCriterionGoal.goalFilter = null,
-    # 	cSingleCriterionGoal.numericExpr = distance from cResourceAssignment[salesrep, state] / state / state to cResourceAssignment[salesrep, state] / salesrep / home / state} with weight 5.0
     # 	cMinimizeAssignmentValue cMinimizeAssignmentValue{
     # 	cScaledGoal.scaleFactorExpr = 1,
     # 	cSingleCriterionGoal.goalFilter = null,
-    # 	cSingleCriterionGoal.numericExpr = total cResourceAssignment[salesrep, state] / salesrep / valueOfInverse(alldistance, alldistance.cAssignmentValueConcept.resource) [alldistance / activity is cResourceAssignment[salesrep, state] / state] / value,
+    # 	cSingleCriterionGoal.numericExpr = total cResourceAssignment[salesrep, state] / salesrep / inverse(disruption.salesrep) [disruption / state is cResourceAssignment[salesrep, state] / state] / value,
     # 	cMinimizeAssignmentValue.assignment = cResourceAssignment[salesrep, state],
-    # 	cMinimizeAssignmentValue.assignmentValue = alldistance} with weight 5.0
-    # 	cMaximizeAssignmentValue cMaximizeAssignmentValue{
-    # 	cScaledGoal.scaleFactorExpr = 1,
-    # 	cSingleCriterionGoal.goalFilter = null,
-    # 	cSingleCriterionGoal.numericExpr = total cResourceAssignment[salesrep, state] / salesrep / inverse(homedistance.salesrep) [homedistance / state is cResourceAssignment[salesrep, state] / state] / value,
-    # 	cMaximizeAssignmentValue.assignment = cResourceAssignment[salesrep, state],
-    # 	cMaximizeAssignmentValue.assignmentValue = homedistance} with weight 5.0
-    join_ResourceAssignment_Homedistance_SG1 = list_of_ResourceAssignment.reset_index().merge(list_of_Homedistance.reset_index(), left_on=['id_of_Salesrep'], right_on=['salesrep']).set_index(list_of_ResourceAssignment.index.names + list(set(list_of_Homedistance.index.names) - set(list_of_ResourceAssignment.index.names)))
-    filtered_ResourceAssignment_Homedistance_SG1 = join_ResourceAssignment_Homedistance_SG1.loc[join_ResourceAssignment_Homedistance_SG1.state == helper_get_level_values(join_ResourceAssignment_Homedistance_SG1, 'id_of_State')].copy()
-    filtered_ResourceAssignment_Homedistance_SG1['conditioned_value'] = filtered_ResourceAssignment_Homedistance_SG1.resourceAssignmentVar * filtered_ResourceAssignment_Homedistance_SG1.value
-    agg_ResourceAssignment_Homedistance_conditioned_value_SG1 = mdl.sum(filtered_ResourceAssignment_Homedistance_SG1.conditioned_value)
+    # 	cMinimizeAssignmentValue.assignmentValue = disruption} with weight 5.0
+    join_ResourceAssignment_Disruption_SG1 = list_of_ResourceAssignment.reset_index().merge(list_of_Disruption.reset_index(), left_on=['id_of_Salesrep'], right_on=['salesrep']).set_index(list_of_ResourceAssignment.index.names + list(set(list_of_Disruption.index.names) - set(list_of_ResourceAssignment.index.names)))
+    filtered_ResourceAssignment_Disruption_SG1 = join_ResourceAssignment_Disruption_SG1.loc[join_ResourceAssignment_Disruption_SG1.state == helper_get_level_values(join_ResourceAssignment_Disruption_SG1, 'id_of_State')].copy()
+    filtered_ResourceAssignment_Disruption_SG1['conditioned_value'] = filtered_ResourceAssignment_Disruption_SG1.resourceAssignmentVar * filtered_ResourceAssignment_Disruption_SG1.value
+    agg_ResourceAssignment_Disruption_conditioned_value_SG1 = mdl.sum(filtered_ResourceAssignment_Disruption_SG1.conditioned_value)
     
-    mdl.add_kpi(1.0 * (agg_ResourceAssignment_Homedistance_conditioned_value_SG1) / 1, publish_name='overall quality of salesrep to state assignments according to homedistances')
+    mdl.add_kpi(1.0 * (agg_ResourceAssignment_Disruption_conditioned_value_SG1) / 1, publish_name='overall cost of salesrep to state assignments according to disruptions')
     
-    mdl.maximize( 0
-        # Sub Goal cMaximizeAssignmentValue_cMaximizeGoal
-        # Maximize overall quality of salesrep to state assignments according to homedistances
-        + 1.0 * (agg_ResourceAssignment_Homedistance_conditioned_value_SG1) / 1
+    mdl.minimize( 0
+        # Sub Goal cMinimizeAssignmentValue_cMinimizeGoal
+        # Minimize overall cost of salesrep to state assignments according to disruptions
+        + 1.0 * (agg_ResourceAssignment_Disruption_conditioned_value_SG1) / 1
     )
     
     # [ST_1] Constraint : cLimitNumberOfResourcesAssignedToEachActivity_cIterativeRelationalConstraint
@@ -124,15 +109,6 @@ def build_model():
     join_Salesrep_ResourceAssignment_State_Salesrep = groupby_Salesrep_ResourceAssignment_State.join(list_of_Salesrep.capacity, how='inner')
     for row in join_Salesrep_ResourceAssignment_State_Salesrep[join_Salesrep_ResourceAssignment_State_Salesrep.capacity.notnull()].itertuples(index=True):
         helper_add_labeled_cplex_constraint(mdl, row.conditioned_customers <= -0.001 + row.capacity, 'For each salesrep, total customers of assigned states is less than capacity', row)
-    
-    # [ST_3] Constraint : cManualAssignment_cCategoryCompatibilityConstraintOnPair
-    # California is assigned to John
-    # Label: CT_3_California_is_assigned_to_John
-    filtered_Salesrep = list_of_Salesrep.loc[['John']]
-    join_Salesrep_ResourceAssignment = filtered_Salesrep.join(list_of_ResourceAssignment, how='inner')
-    filtered_State = list_of_State.loc[['California']]
-    join_Salesrep_ResourceAssignment_State = join_Salesrep_ResourceAssignment.reset_index().join(filtered_State, on=['id_of_State'], how='inner').set_index(join_Salesrep_ResourceAssignment.index.names)
-    helper_add_labeled_cplex_constraint(mdl, mdl.sum(join_Salesrep_ResourceAssignment_State.resourceAssignmentVar) >= 1, 'California is assigned to John')
 
 
     return mdl
